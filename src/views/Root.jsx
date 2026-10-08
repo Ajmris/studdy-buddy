@@ -1,28 +1,16 @@
 import UsersList from '../components/organisms/UsersList/UsersList'
-import styled from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../assets/styles/globalStyles.js';
+import { theme } from '../assets/styles/theme.js';
+import { Wrapper } from './Root.styles.js';
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100%;
-  background-color: #f7f8fa;
-`;
-const Root=()=> {
+const Root=()=> (
+  <ThemeProvider theme={theme}>
+    <GlobalStyle />
+    <Wrapper>
+        <UsersList />
+    </Wrapper>
+  </ThemeProvider>
+)
 
-  return (
-    <>
-      <GlobalStyle />
-      <Wrapper>
-        <div>
-          <h1>Get started</h1>
-          <UsersList />
-        </div>
-      </Wrapper>
-    </>
-  )
-}
-
-export default Root
+export default Root;
