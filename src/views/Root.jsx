@@ -1,23 +1,26 @@
-import heroImg from '../assets/hero.png'
-import reactLogo from '../assets/react.svg'
-import viteLogo from '../assets/vite.svg'
-import UsersList from '../components/UsersList/UsersList'
+import UsersList from '../components/organisms/UsersList/UsersList'
+import styled from 'styled-components';
+import { GlobalStyle } from '../assets/styles/globalStyles.js';
 
-function Root() {
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: #f7f8fa;
+`;
+const Root=()=> {
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
+      <GlobalStyle />
+      <Wrapper>
         <div>
           <h1>Get started</h1>
           <UsersList />
         </div>
-      </section>
+      </Wrapper>
     </>
   )
 }
