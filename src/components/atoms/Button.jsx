@@ -1,10 +1,9 @@
-import styled from 'styled-components';
 import DeleteIcon from '../../assets/delete-icon.svg';
-import { StyledButton } from './Button.styles.js';
+import { StyledButton } from './Button.styles';
 
-const Button = () => (
-    <StyledButton>
-        <img src={DeleteIcon} alt="" />
+const Button = (props) => (
+    <StyledButton {...props}>
+        <img src={DeleteIcon} alt="Delete" />
     </StyledButton>
 );
 
