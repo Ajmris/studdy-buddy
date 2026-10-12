@@ -1,35 +1,54 @@
-import React from 'react';
-import {users} from '../../../data/users.js';
+import React, {useState, useEffect} from 'react';
+import {users as usersData} from '../../../data/users.js';
 import UsersListItem from '../../molecules/UsersListItem/UsersListItem.jsx';
 import { Wrapper, StyledList } from './UsersList.styles.js';
 
-class UsersList extends React.Component {
-    state={
-        users: users,
-    }
-    toggleListTitle=()=>{
-        this.setState((prevState)=>({ isUsersList: !this.state.isUsersList }));
+const mockAPI = () => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if(usersData){
+                resolve([...usersData]);
+            }else{
+                reject('Error: No users found');
+            }
+        }, 2000);
+    });
+};
+
+const UsersList = () => {
+    const [users, setUsers] = useState([]);
+    const [isLoading, setLoadingState] = useState([]);
+
+    useEffect(() => {
+        setLoadingState(true);
+        mockAPI()
+            .then((data) => {
+                setUsers(data);
+                setLoadingState(false);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
+
+    useEffect(() => {
+        console.log('Loading state changed');
+    }, [isLoading]);
+
+    const deleteUser = (name) => {
+        const filteredUsers = users.filter((user) => user.name !== name);
+        setUsers(filteredUsers);
     };
-    deleteUser=(name)=>{
-        const fillteredUsers = this.state.users.filter(user=> user.name !== name);
-        this.setState({users: fillteredUsers});
-    };
-    render(){
-        // destrukturyzacja
-        const {isUsersList} = this.state;
-        return(
+    return(
             <Wrapper>
-                <h1>{isUsersList ? `User's list`:'Students list'}</h1>
-                <button onClick={this.toggleListTitle}>
-                    Change title
-                </button>
+                <h1>{isLoading ? 'Loading...' : 'Users List'}</h1>
                 <StyledList>
-                    {this.state.users.map((userData) => (
-                        <UsersListItem deleteUser={this.deleteUser} key={userData.name} userData={userData} />
+                    {users.map((userData) => (
+                        <UsersListItem deleteUser={deleteUser} key={userData.name} userData={userData} />
                     ))}
                 </StyledList>
             </Wrapper>
         );
-    }
 }
+
 export default UsersList;
