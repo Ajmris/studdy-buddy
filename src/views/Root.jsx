@@ -8,7 +8,8 @@ const Root=()=> (
   <ThemeProvider theme={theme}>
     <GlobalStyle />
     <Wrapper>
-        <UsersList />
+        {/* propsy */}
+        <UsersList title="Users List" />
     </Wrapper>
   </ThemeProvider>
 )

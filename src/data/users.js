@@ -13,7 +13,7 @@ export const users = [
     name: "Piotr Wiśniewski",
     attendance: 95,
     average: 4.7
-  },/*
+  },
   {
     name: "Katarzyna Wójcik",
     attendance: 78,
@@ -48,5 +48,5 @@ export const users = [
     name: "Natalia Kozłowska",
     attendance: 96,
     average: 4.6
-  }*/
+  }
 ];
