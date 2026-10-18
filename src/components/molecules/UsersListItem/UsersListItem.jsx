@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import DeleteButton from '../../atoms/DeleteButton/DeleteButton';
 import { StyledAverage, StyledInfo, Wrapper } from './UsersListItem.styles';
