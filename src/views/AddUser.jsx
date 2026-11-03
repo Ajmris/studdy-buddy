@@ -1,4 +1,4 @@
-import React, {useState, useContext, useReducer} from 'react';
+import React, { useContext, useReducer} from 'react';
 import FormField from '../components/molecules/FormField/FormField';
 import { Button } from '../components/atoms/Button/Button';
 import { ViewWrapper } from '../components/molecules/ViewWrapper/ViewWrapper';
@@ -43,14 +43,20 @@ const reducer = (state, action) => {
       return state;
   }
 };
+const veryLongFunction = (number) => {
+  for(let i=0; i<30000000; i++);
+  return `Roman ${number}`;};
 
 const AddUser = () => {
   const [formValues, dispatch] = useReducer(reducer, initialFormState);
+  const [randomNumber, setRandomNumber] = React.useState(0);
   const {handleAddUser}=useContext(UsersContext);
+
+  const getRoman = React.useMemo(() => veryLongFunction(randomNumber), [randomNumber]);
 
   const handleInputChange = (e) => {
     dispatch({
-      type: 'INPUT_CHANGE',
+      type: actionTypes.inputChange,
       field: e.target.name,
       value: e.target.value
     });
@@ -60,15 +66,20 @@ const AddUser = () => {
     e.preventDefault();
     if(formValues.consent){
       handleAddUser(formValues);
-      dispatch({ type: 'CLEAR_VALUES' });
+      dispatch({ type: actionTypes.clearValues });
     }else{
-      dispatch({ type: 'SET_ERROR', errorValue: 'You need to give consent to add a new student.' });
+      dispatch({ type: actionTypes.setError, errorValue: 'You need to give consent to add a new student.' });
     }
   }
   
   return (
     <ViewWrapper as="form" onSubmit={handleSubmitUser}>
       <Title>Add new student</Title>
+      <Title>{getRoman}</Title>
+      <p>{formValues.customValue}</p>
+      <Button onClick={() => dispatch({ type: actionTypes.inputChange, field: 'customValue', value: randomNumber })}>Add</Button>
+      <Button onClick={() => dispatch({ type: actionTypes.inputChange, field: 'customValue', value: randomNumber - 1 })}>Subtract</Button><br />
+      <Button onClick={() => setRandomNumber(Math.random())}>Get random number</Button>
       <FormField label="Name" id="name" name="name" value={formValues.name} onChange={handleInputChange} />
       <FormField label="Attendance" id="attendance" name="attendance" value={formValues.attendance} onChange={handleInputChange} />
       <FormField label="Average" id="average" name="average" value={formValues.average} onChange={handleInputChange} />
