@@ -1,5 +1,4 @@
 import { Input } from '../../atoms/Input/Input';
-import React from 'react';
 import { SearchBarWrapper, StatusInfo } from './SearchBar.styles';
 
 export const SearchBar = () => (
