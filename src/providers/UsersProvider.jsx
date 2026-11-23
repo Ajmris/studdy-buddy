@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { users as usersData } from '../data/users';
-
+import React, { useState, useEffect } from "react";
+import { students as studentsData } from '../components/mocks/data/students';
+import axios from "axios";
 
 export const UsersContext=React.createContext({
   users:[],
@@ -9,10 +9,22 @@ export const UsersContext=React.createContext({
 });
 
 const UsersProvider=({children})=>{
-    const [users, setUsers] = useState(usersData);
+    const [students, setStudents] = useState(studentsData);
+    
+    useEffect(() => {
+      axios
+        .get('/students')
+        .then(({ data }) => 
+          setStudents(data.students)
+        )
+        .catch((error) => {
+          console.error('Error fetching students:', error);
+        });
+    }, []);
+    
     const deleteUser = (name) => {
-        const filteredUsers = users.filter((user) => user.name !== name);
-        setUsers(filteredUsers);
+        const filteredStudents = students.filter((student) => student.name !== name);
+        setStudents(filteredStudents);
     };
 
   const handleAddUser = (formValues) => {
@@ -22,12 +34,12 @@ const UsersProvider=({children})=>{
       average: formValues.average,
     };
 
-    setUsers([newUser, ...users]);
+    setStudents([newUser, ...students]);
   };
     return(
         <UsersContext.Provider
           value={{
-            users,
+            users: students,
             handleAddUser,
             deleteUser,
           }}

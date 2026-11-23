@@ -1,6 +1,6 @@
 import FormField from '../../molecules/FormField/FormField';
 import { Button } from '../../atoms/Button/Button';
-import { StyledTitle, Wrapper } from '../UsersList/UsersList.styles';
+import { StyledTitle, Wrapper } from '../StudentsList/StudentsList.styles';
 
 const Form = ({ handleAddUser, formValues, handleInputChange }) => {
   return (
